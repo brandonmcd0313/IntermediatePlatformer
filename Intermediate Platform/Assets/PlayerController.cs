@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+        if(Input.GetButton("Fire1"))
+        {
+
+        }
+
         //fixed rotation, avoid any "potential" issues
         transform.eulerAngles = new Vector3(0, 0, 0);
         
