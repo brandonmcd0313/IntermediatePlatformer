@@ -10,16 +10,22 @@ public class PlayerController : MonoBehaviour {
     public bool facingRight = true;
     public GameObject j1, j2; //jump check objects 
     Rigidbody2D rb2d;
+    Transform init;
     void Start () {
         canMove = true;
         rb2d = this.GetComponent<Rigidbody2D>();
+        init = this.transform;
 	}
 
     // Update is called once per frame
     void Update()
     {
         //fixed rotation, avoid any "potential" issues
-        if (canMove)
+        if(this.transform.rotation != init.rotation)
+        {
+            this.transform.rotation = init.rotation;
+        }
+        
         {
             //left/right movement
             if (Input.GetButton("Horizontal")) //right
