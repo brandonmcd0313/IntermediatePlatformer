@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class Player1Controller : MonoBehaviour {
+    //this is player one, simular to player two but not
+    //button maps end with "P1" to indicate difference
+
+    //player1 uses arrow keys to move, left ctrl,alt,shift to fire
+    //space to jump
+    //other bindings are Z, X, C, 3
 
     // Use this for initialization
     bool canMove, canJump;
@@ -21,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
 
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButton("Fire1P1"))
         {
 
         }
@@ -32,11 +38,11 @@ public class PlayerController : MonoBehaviour {
         if(canMove)
         {
             //left/right movement
-            if (Input.GetButton("Horizontal")) //right
+            if (Input.GetButton("HorizontalP1")) //right
             {
                 //Time.deltaTime is the amount of time between
                 // one frame and the next, used for smoothing
-                float dist = Input.GetAxis("Horizontal") * speed;
+                float dist = Input.GetAxis("HorizontalP1") * speed;
                 transform.position +=
                     new Vector3(dist * Time.deltaTime, 0);
 
@@ -44,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 
             //flip left/right
             //if facing right and press left, flip
-            if (facingRight && (Input.GetAxis("Horizontal") < 0))
+            if (facingRight && (Input.GetAxis("HorizontalP1") < 0))
             {
                 facingRight = false;
                 //flip the x, leave the y and z alone
@@ -55,7 +61,7 @@ public class PlayerController : MonoBehaviour {
             }
 
             //if not facing right and press right, flip
-            else if (!facingRight && (Input.GetAxis("Horizontal") > 0))
+            else if (!facingRight && (Input.GetAxis("HorizontalP1") > 0))
             {
                 facingRight = true;
                 //flip the x, leave the y and z alone
@@ -76,7 +82,7 @@ public class PlayerController : MonoBehaviour {
 
 
             //the moment they press the space bar, apply up force
-            if (Input.GetButton("Jump") && canJump)
+            if (Input.GetButton("JumpP1") && canJump)
             {
                 rb2d.AddForce(new Vector3(0, jumpForce));
             }
