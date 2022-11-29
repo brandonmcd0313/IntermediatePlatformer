@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rb2d;
     void Start () {
         canMove = true;
+        rb2d = this.GetComponent<Rigidbody2D>();
 	}
 
     // Update is called once per frame
     void Update()
     {
+        //fixed rotation, avoid any "potential" issues
         if (canMove)
         {
             //left/right movement
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour {
                 j2.transform.position) != null &&
                 Physics2D.OverlapArea(j1.transform.position,
                 j2.transform.position).gameObject.tag == "Platform")
-                canJump = true;
+            { canJump = true; }
 
 
             //the moment they press the space bar, apply up force
