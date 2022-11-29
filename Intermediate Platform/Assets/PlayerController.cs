@@ -21,11 +21,9 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         //fixed rotation, avoid any "potential" issues
-        if(this.transform.rotation != init.rotation)
-        {
-            this.transform.rotation = init.rotation;
-        }
+        transform.eulerAngles = new Vector3(0, 0, 0);
         
+        if(canMove)
         {
             //left/right movement
             if (Input.GetButton("Horizontal")) //right
