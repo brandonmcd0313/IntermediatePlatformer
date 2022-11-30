@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
             else if(grabbed)
             {
                 grabbed = false;
-                hit.rigidbody.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
+                hit.rigidbody.velocity = new Vector3(0, 0, 0);
             }
         }
         else
@@ -76,7 +76,8 @@ public class PlayerController : MonoBehaviour {
             else if (grabbed)
             {
                 grabbed = false;
-                hit.rigidbody.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
+                hit.rigidbody.velocity = new Vector3(0, 10, 0);
+                    
             }
         }
         
