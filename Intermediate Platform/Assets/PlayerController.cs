@@ -102,18 +102,33 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        //if hit the bonk zone of the other player
-        if(col.gameObject.tag == "BonkDetect" && col.gameObject.transform.parent != this.gameObject)
-        {
 
-            col.gameObject.transform.parent.gameObject.GetComponent<PlayerController>().bonk(facingRight);
+        //if hit the bonk zone of the other player
+        if (col.gameObject.tag == "BonkDetect" && col.gameObject.transform.parent != this.gameObject)
+        {
+            StartCoroutine(BonkConformation(col));
         }
     }
 
+    IEnumerator BonkConformation(Collider2D col)
+    {
+        //wait till they jump
+        yield return new WaitUntil(() => (Input.GetButton("Jump" + playerCode) && canJump));
+        //make sure they are still in the area
+            if ((col.transform.parent.position.y + 4 <= transform.position.y) && Mathf.Abs(col.transform.parent.position.x - transform.position.x) <= 2)
+            {
+
+                GameObject other = col.gameObject.transform.parent.gameObject;
+
+                other.GetComponent<PlayerController>().bonk(facingRight);
+            }
+        
+    }
 
 
     public void bonk(bool direction)
     {
+        print("BONK");
         //direction is the direction the other player jumped off
         //if player jumped off right push back to the left, else push right
         if (direction)
