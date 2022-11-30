@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour {
         //if hit the bonk zone of the other player
         if(col.gameObject.tag == "BonkDetect" && col.gameObject.transform.parent != this.gameObject)
         {
+
             col.gameObject.transform.parent.gameObject.GetComponent<PlayerController>().bonk(facingRight);
         }
     }
