@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rb2d;
     Transform init;
     public string playerCode; //P1 or P2, determines input mapping
+    public bool grabbed; //if the player has grabbed the other player or not
+    RaycastHit2D hit;
     void Start () {
         canMove = true;
         rb2d = this.GetComponent<Rigidbody2D>();
@@ -33,10 +35,52 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
 
-        if(Input.GetButton("Fire1"+ playerCode))
+        if(facingRight)
         {
-
+            if(!grabbed)
+            {
+                hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
+            }
+            
+            if (Input.GetButton("Fire1" + playerCode))
+            {
+                if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                {
+                    print("grabbed right");
+                    hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                    grabbed = true;
+                }
+            }
+            else if(grabbed)
+            {
+                grabbed = false;
+                hit.rigidbody.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
+            }
         }
+        else
+        {
+            if(!grabbed)
+            {
+                hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
+            }
+
+            if (Input.GetButton("Fire1" + playerCode))
+            {
+                if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                {
+                    print("grabbed left");
+                    hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                    grabbed = true;
+                }
+            }
+            else if (grabbed)
+            {
+                grabbed = false;
+                hit.rigidbody.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
+            }
+        }
+        
+        
 
         //fixed rotation, avoid any "potential" issues
         transform.eulerAngles = new Vector3(0, 0, 0);
