@@ -495,8 +495,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 200
-  bonkForce: 500
+  jumpForce: 600
+  bonkForce: 5
+  throwForce: 15
   facingRight: 1
   j1: {fileID: 679494693}
   j2: {fileID: 112092715}
@@ -516,7 +517,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -861,7 +862,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -916,7 +917,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1882250042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.14, y: -4.1, z: 0}
+  m_LocalPosition: {x: -12.14, y: 34.2, z: 0}
   m_LocalScale: {x: 2.38, y: 4.44, z: 1}
   m_Children:
   - {fileID: 1988792266}
@@ -965,8 +966,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 200
-  bonkForce: 500
+  jumpForce: 600
+  bonkForce: 5
+  throwForce: 15
   facingRight: 1
   j1: {fileID: 1988792265}
   j2: {fileID: 110705903}

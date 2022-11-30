@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NUnit.Framework.Constraints;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     bool canMove, canJump, jumping;
-    public float speed, jumpForce, bonkForce;
+    public float speed, jumpForce, bonkForce, throwForce;
     public bool facingRight = true;
     public GameObject j1, j2; //jump check objects 
     Rigidbody2D rb2d;
@@ -35,57 +36,66 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
 
-        if(facingRight)
+        //grabing stuff
         {
-            if(!grabbed)
+            if (facingRight)
             {
-                hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
-            }
-            
-            if (Input.GetButton("Fire1" + playerCode))
-            {
-                if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                if (!grabbed)
                 {
-                    print("grabbed right");
-                    hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
-                    grabbed = true;
+                    hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
                 }
-            }
-            else if(grabbed)
-            {
-                grabbed = false;
-                hit.rigidbody.velocity = new Vector3(0, 0, 0);
-            }
-        }
-        else
-        {
-            if(!grabbed)
-            {
-                hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
-            }
 
-            if (Input.GetButton("Fire1" + playerCode))
-            {
-                if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                if (Input.GetButton("Fire1" + playerCode))
                 {
-                    print("grabbed left");
-                    hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
-                    grabbed = true;
+                    if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                    {
+                        print("grabbed right");
+                        hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
+                        hit.rigidbody.velocity = Vector2.zero;
+                        hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        grabbed = true;
+                    }
+                }
+                else if (grabbed)
+                {
+                    grabbed = false;
+                    hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
+                    
+                    hit.rigidbody.velocity += new Vector2(throwForce, 0);
                 }
             }
-            else if (grabbed)
+            else
             {
-                grabbed = false;
-                hit.rigidbody.velocity = new Vector3(0, 10, 0);
-                    
+                if (!grabbed)
+                {
+                    hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
+                }
+
+                if (Input.GetButton("Fire1" + playerCode))
+                {
+                    if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                    {
+                        print("grabbed left");
+                        hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
+                        hit.rigidbody.velocity = Vector2.zero;
+                        hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        grabbed = true;
+                    }
+                }
+                else if (grabbed)
+                {
+                    grabbed = false;
+                    hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
+                    hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+
+                }
             }
         }
-        
-        
 
         //fixed rotation, avoid any "potential" issues
         transform.eulerAngles = new Vector3(0, 0, 0);
-        
+
+        //movement stuff
         if(canMove)
         {
             //left/right movement
@@ -143,8 +153,39 @@ public class PlayerController : MonoBehaviour {
                 rb2d.AddForce(new Vector3(0, jumpForce));
             }
         }
+
+        //keep this player on the screen!
+        {
+
+            //player bounds are -28 to 28 on x axis
+            //-18 to 18 on y axis
+
+            //while player is above the bounds of the screen
+            if (this.transform.position.y > 18)
+            {
+                //increase/decrease their gravity scale exponentially until they are below top of screen
+                rb2d.gravityScale = (2* this.transform.position.y - 18);
+            }
+            else
+            {
+                rb2d.gravityScale = 3;
+            }
+            
+
+            //if player goes left or right or below the screen
+
+            //respawn them but take away points
+
+
+        }
+
+
     }
 
+    public void setMove(bool move)
+    {
+        canMove = move;
+    }
     void OnTriggerExit2D(Collider2D col)
     {
 
@@ -178,11 +219,11 @@ public class PlayerController : MonoBehaviour {
         //if player jumped off right push back to the left, else push right
         if (direction)
         {
-            rb2d.AddForce(new Vector3(-bonkForce, 0));
+            rb2d.velocity += new Vector2(-bonkForce, 0);
         }
         else
         {
-            rb2d.AddForce(new Vector3(bonkForce, 0));
+            rb2d.velocity += new Vector2(bonkForce, 0);
         }
     }
 }
