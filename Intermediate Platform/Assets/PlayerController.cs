@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
-
+//using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
     //this is player one, simular to player two but not
     //button maps end with "P1" to indicate difference
@@ -27,17 +27,26 @@ public class PlayerController : MonoBehaviour {
     public string playerCode; //P1 or P2, determines input mapping
     public bool grabbed; //if the player has grabbed the other player or not
     RaycastHit2D hit;
+    public Slider smashMeter;
+    public GameObject smashMeterObject;
+    public bool running, brokeOut;
+    
     void Start () {
 
         canMove = true;
         rb2d = this.GetComponent<Rigidbody2D>();
         init = this.transform;
+        smashMeterObject.SetActive(false);
 	}
 
     // Update is called once per frame
     void Update()
     {
-
+        
+        if(Input.GetButtonDown("Fire2" + playerCode) && running)
+        {
+            smashMeter.value += 10;
+        }
         //grabing stuff
         {
             if (facingRight)
@@ -50,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 
                 if (Input.GetButton("Fire1" + playerCode))
                 {
-                    if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                    if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed right");
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
@@ -58,9 +67,18 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
                         speed = 3.5f;
                         grabbed = true;
+                        if (!running)
+                        {
+                            smashMeter.value = 15;
+                            StartCoroutine(smashin());
+                        }
+                    }
+                    else
+                    {
+                        grabbed = false;
                     }
                 }
-                else if (grabbed)
+                else if (grabbed && !brokeOut)
                 {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
@@ -78,7 +96,7 @@ public class PlayerController : MonoBehaviour {
 
                 if (Input.GetButton("Fire1" + playerCode))
                 {
-                    if ((hit.transform != null && hit.transform.tag == "Player") || grabbed)
+                    if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed left");
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
@@ -86,9 +104,19 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
                         speed = 3.5f;
                         grabbed = true;
+                        if (!running)
+                        {
+                            smashMeter.value = 15;
+                            StartCoroutine(smashin());
+                        }
+                    }
+                    else
+                    {
+                        grabbed = false;
+                        
                     }
                 }
-                else if (grabbed)
+                else if (grabbed && !brokeOut)
                 {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
@@ -218,6 +246,31 @@ public class PlayerController : MonoBehaviour {
         
     }
 
+    IEnumerator smashin()
+    {
+        smashMeterObject.SetActive(true);
+        running = true;
+        brokeOut = false;
+        while(smashMeter.value >= 0)
+        {
+            smashMeter.value -= 1.5f;
+            yield return new WaitForSeconds(0.05f);
+            if(smashMeter.value >= smashMeter.maxValue)
+            {
+                print("broke out");
+                brokeOut = true;
+                hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
+                if(facingRight) hit.rigidbody.velocity += new Vector2(throwForce, 0);
+                else hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+                speed = 10f;
+                yield return new WaitForSeconds(2);
+                brokeOut = false;
+                break;
+            }
+        }
+        smashMeterObject.SetActive(false);
+        running = false;
+    }
 
     public void bonk(bool direction)
     {
