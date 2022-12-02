@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class PlayerController : MonoBehaviour {
     //this is player one, simular to player two but not
@@ -17,8 +18,8 @@ public class PlayerController : MonoBehaviour {
     //other bindings are E, [, ], 6
 
     // Use this for initialization
-    bool canMove, canJump, jumping;
-    public float speed, jumpForce, bonkForce, throwForce;
+    private bool canMove, canJump, jumping;
+    [SerializeField] float speed, jumpForce, bonkForce, throwForce;
     public bool facingRight = true;
     public GameObject j1, j2; //jump check objects 
     Rigidbody2D rb2d;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     public bool grabbed; //if the player has grabbed the other player or not
     RaycastHit2D hit;
     void Start () {
+
         canMove = true;
         rb2d = this.GetComponent<Rigidbody2D>();
         init = this.transform;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (facingRight)
             {
+                //while the player hasn't grabbed anything check if theres a player infront
                 if (!grabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        speed = 3.5f;
                         grabbed = true;
                     }
                 }
@@ -60,12 +64,13 @@ public class PlayerController : MonoBehaviour {
                 {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
-                    
+                    speed = 10f;
                     hit.rigidbody.velocity += new Vector2(throwForce, 0);
                 }
             }
             else
             {
+                //while the player hasn't grabbed anything check if theres a player infront
                 if (!grabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
@@ -79,6 +84,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        speed = 3.5f;
                         grabbed = true;
                     }
                 }
@@ -87,6 +93,7 @@ public class PlayerController : MonoBehaviour {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+                    speed = 10f;
 
                 }
             }
@@ -148,7 +155,7 @@ public class PlayerController : MonoBehaviour {
 
 
                 //the moment they press the space bar, apply up force
-                if (Input.GetButton("Jump" + playerCode) && canJump)
+                if (Input.GetButtonDown("Jump" + playerCode) && canJump)
             {
                 rb2d.AddForce(new Vector3(0, jumpForce));
             }
