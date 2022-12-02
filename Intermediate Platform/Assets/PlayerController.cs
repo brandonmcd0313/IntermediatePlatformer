@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (facingRight)
             {
+                //while the player hasn't grabbed anything check if theres a player infront
                 if (!grabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        speed = 3.5f;
                         grabbed = true;
                     }
                 }
@@ -60,12 +62,13 @@ public class PlayerController : MonoBehaviour {
                 {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
-                    
+                    speed = 10f;
                     hit.rigidbody.velocity += new Vector2(throwForce, 0);
                 }
             }
             else
             {
+                //while the player hasn't grabbed anything check if theres a player infront
                 if (!grabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
@@ -79,6 +82,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        speed = 3.5f;
                         grabbed = true;
                     }
                 }
@@ -87,6 +91,7 @@ public class PlayerController : MonoBehaviour {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+                    speed = 10f;
 
                 }
             }
