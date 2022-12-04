@@ -6,17 +6,27 @@ using UnityEngine;
 public class SpawnZone : MonoBehaviour {
 	private bool avalible; private GameObject current;
 	[SerializeField] GameObject pickup; bool waitin;
+	public static int tutWait;
 	// Use this for initialization
 	void Start () {
-		//spawn the pickup 
-		current = Instantiate(pickup, this.transform.position, Quaternion.identity);
+		//if tutorial is happening wait untill it is exited
+		if(PlayerPrefs.GetInt("Tutorial") == 1)
+		{
+			tutWait = 1;
+		}
+		else
+		{
+
+            //spawn the pickup 
+            current = Instantiate(pickup, this.transform.position, Quaternion.identity);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
         //check if pickup still exists
         //if not start cooldown for ANTOHER
-        if (current == null & !waitin)
+        if (current == null & !waitin && (tutWait == 0))
 		{
 			StartCoroutine(newSpawn());
             waitin = true;
@@ -24,6 +34,14 @@ public class SpawnZone : MonoBehaviour {
 		
 	}	
 
+	IEnumerator firstWait()
+	{
+		waitin = true;
+		yield return new WaitUntil(() => (tutWait == 0));
+        //spawn the pickup 
+        current = Instantiate(pickup, this.transform.position, Quaternion.identity);
+		waitin = false;
+    }
 	IEnumerator newSpawn()
 	{
 		print("begin");

@@ -23,22 +23,39 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
     public bool facingRight = true;
     public GameObject j1, j2; //jump check objects 
-    Rigidbody2D rb2d;
-    Transform init;
+    Rigidbody2D rb2d; Color color;
+    Transform init; public static int tutWait;
     public string playerCode; //P1 or P2, determines input mapping
     public bool grabbed; //if the player has grabbed the other player or not
     RaycastHit2D hit;
     public Slider smashMeter;
     public GameObject smashMeterObject;
     public bool running, brokeOut;
+    private Vector2 ViewportPos;
     void Start () {
 
         canMove = true;
+        if(PlayerPrefs.GetInt("Tutorial") == 1)
+        {
+            canMove = false;
+            //make player invisible
+            color = this.GetComponent<SpriteRenderer>().color;
+                color.a = 0;
+            this.GetComponent<SpriteRenderer>().color = color;
+            StartCoroutine(tutorialWait());
+        }
         rb2d = this.GetComponent<Rigidbody2D>();
         init = this.transform;
         smashMeterObject.SetActive(false);
 	}
-
+    IEnumerator tutorialWait()
+    {
+        yield return new WaitUntil(() => (tutWait == 0));
+        canMove = true;
+        //make player invisible
+        color.a = 255;
+        this.GetComponent<SpriteRenderer>().color = color;
+    }
     
     // Update is called once per frame
     void Update()
@@ -46,7 +63,7 @@ public class PlayerController : MonoBehaviour {
         //error, grabbed player is able to grab the player grabbing them.
         if(Input.GetButtonDown("Fire2" + playerCode) && running)
         {
-            smashMeter.value += 10;
+            smashMeter.value += 50;
         }
         //grabing stuff
         {
@@ -66,6 +83,8 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                        smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
                         grabbed = true;
                         if (!running)
@@ -85,6 +104,9 @@ public class PlayerController : MonoBehaviour {
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
                     speed = 10f;
                     hit.rigidbody.velocity += new Vector2(throwForce, 0);
+                    StopCoroutine(smashin());
+                    smashMeterObject.SetActive(false);
+                    running = false;
                 }
             }
             else
@@ -103,6 +125,8 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                        smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
                         grabbed = true;
                         if (!running)
@@ -123,7 +147,9 @@ public class PlayerController : MonoBehaviour {
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
                     speed = 10f;
-
+                    StopCoroutine(smashin());
+                    smashMeterObject.SetActive(false);
+                    running = false;
                 }
             }
         }
