@@ -9,7 +9,7 @@ public class SpawnZone : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//spawn the pickup 
-		current = Instantiate(pickup, this.transform);
+		current = Instantiate(pickup, this.transform.position, Quaternion.identity);
 	}
 	
 	// Update is called once per frame
@@ -26,9 +26,12 @@ public class SpawnZone : MonoBehaviour {
 
 	IEnumerator newSpawn()
 	{
-		
+		print("begin");
 		float wait = UnityEngine.Random.Range(3f, 10f);
 		yield return new WaitForSeconds(wait);
-		waitin = false;
+        //spawn the pickup 
+        current = Instantiate(pickup, this.transform.position, Quaternion.identity);
+        waitin = false;
+		
 	}
 }

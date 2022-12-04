@@ -33,5 +33,4 @@ public class ScoreManager : MonoBehaviour {
         }
     }
 
-	//have a particle effect that shows when score increases or decreases?
 }

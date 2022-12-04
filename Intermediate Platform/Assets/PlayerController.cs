@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 //using UnityEngine.Experimental.UIElements;
 using UnityEngine.UI;
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour {
     public Slider smashMeter;
     public GameObject smashMeterObject;
     public bool running, brokeOut;
-    
     void Start () {
 
         canMove = true;
@@ -39,10 +39,11 @@ public class PlayerController : MonoBehaviour {
         smashMeterObject.SetActive(false);
 	}
 
+    
     // Update is called once per frame
     void Update()
     {
-        
+        //error, grabbed player is able to grab the player grabbing them.
         if(Input.GetButtonDown("Fire2" + playerCode) && running)
         {
             smashMeter.value += 10;
@@ -286,6 +287,16 @@ public class PlayerController : MonoBehaviour {
             rb2d.velocity += new Vector2(bonkForce, 0);
         }
     }
+/*
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Pickup")
+        {
+            col.gameObject.GetComponent<Pickup>().grab(this.gameObject);
+        }
+    }
+    */
+
 }
       
     
