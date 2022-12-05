@@ -1,7 +1,5 @@
-﻿using NUnit.Framework.Constraints;
+﻿
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 //using UnityEngine.Experimental.UIElements;
 using UnityEngine.UI;
@@ -39,6 +37,8 @@ public class PlayerController : MonoBehaviour {
         canMove = true;
         if(PlayerPrefs.GetInt("Tutorial") == 1)
         {
+            tutWait = 1;
+            //print("fart");
             canMove = false;
             //make player invisible
             color = this.GetComponent<SpriteRenderer>().color;
@@ -52,8 +52,12 @@ public class PlayerController : MonoBehaviour {
 	}
     IEnumerator tutorialWait()
     {
+       // print(tutWait);
         yield return new WaitUntil(() => (tutWait == 0));
+
+
         canMove = true;
+        //print("poop");
         //make player invisible
         color.a = 255;
         this.GetComponent<SpriteRenderer>().color = color;
