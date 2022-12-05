@@ -10,6 +10,7 @@ public class Tutorial : MonoBehaviour {
 		{
 
             TutorialImage = Instantiate(TutorialImage);
+			blur = Instantiate(blur);
         }
 		else
 		{
@@ -23,10 +24,16 @@ public class Tutorial : MonoBehaviour {
 		//both players submit
 		if(Input.GetButton("SubmitP1") && Input.GetButton("SubmitP2"))
 		{
-			//start spawnzones
-			SpawnZone.tutWait = 0;
+			//Destory it all
+			Destroy(TutorialImage);
+			Destroy(blur);
+           
+            //start spawnzones
+            SpawnZone.tutWait = 0;
 			//allow playermovements
 			PlayerController.tutWait = 0;
-		}
+            //destroy the tutorial manager
+            Destroy(this.gameObject);
+        }
 	}
 }

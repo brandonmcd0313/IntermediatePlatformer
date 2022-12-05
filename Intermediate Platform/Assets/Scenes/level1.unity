@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePop: {fileID: 1512638905414484, guid: dc576fcc2fd0ac346bad314a757b094c, type: 2}
-  deathCost: -500
+  deathCost: -100
 --- !u!1 &1190922395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2318,7 +2318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePop: {fileID: 1512638905414484, guid: dc576fcc2fd0ac346bad314a757b094c, type: 2}
-  deathCost: -500
+  deathCost: -100
 --- !u!1 &1944456028
 GameObject:
   m_ObjectHideFlags: 0
