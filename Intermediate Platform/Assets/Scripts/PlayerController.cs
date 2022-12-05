@@ -32,8 +32,10 @@ public class PlayerController : MonoBehaviour {
     public GameObject smashMeterObject;
     public bool running, brokeOut;
     private Vector2 ViewportPos;
-    void Start () {
+    public bool canGrab;
 
+    void Start () {
+        setGrab(true);
         canMove = true;
         if(PlayerPrefs.GetInt("Tutorial") == 1)
         {
@@ -57,14 +59,27 @@ public class PlayerController : MonoBehaviour {
         this.GetComponent<SpriteRenderer>().color = color;
     }
     
+    public bool getGrab()
+    {
+        return canGrab;
+    }
+    
+    public void setGrab(bool i)
+    {
+        canGrab = i;
+    }
     // Update is called once per frame
     void Update()
     {
         //error, grabbed player is able to grab the player grabbing them.
-        if(Input.GetButtonDown("Fire2" + playerCode) && running)
+        if(hit.transform != null)
         {
-            smashMeter.value += 50;
+            if (Input.GetButtonDown("Fire2" + playerCode) && running)
+            {
+                smashMeter.value += 50;
+            }
         }
+
         //grabing stuff
         {
             if (facingRight)
@@ -75,17 +90,19 @@ public class PlayerController : MonoBehaviour {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
                 }
 
-                if (Input.GetButton("Fire1" + playerCode))
+                if (Input.GetButton("Fire1" + playerCode) && getGrab())
                 {
                     if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed right");
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
+                        hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
                         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
                         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
+                        
                         grabbed = true;
                         if (!running)
                         {
@@ -100,6 +117,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 else if (grabbed && !brokeOut)
                 {
+                    hit.transform.gameObject.GetComponent<PlayerController>().setGrab(true);
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
                     speed = 10f;
@@ -117,12 +135,13 @@ public class PlayerController : MonoBehaviour {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
                 }
 
-                if (Input.GetButton("Fire1" + playerCode))
+                if (Input.GetButton("Fire1" + playerCode) && getGrab())
                 {
                     if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed left");
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
+                        hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
                         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
@@ -145,6 +164,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     grabbed = false;
                     hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
+                    hit.transform.gameObject.GetComponent<PlayerController>().setGrab(true);
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
                     speed = 10f;
                     StopCoroutine(smashin());
@@ -286,9 +306,10 @@ public class PlayerController : MonoBehaviour {
             {
                 print("broke out");
                 brokeOut = true;
+                hit.transform.gameObject.GetComponent<PlayerController>().setGrab(true);
                 hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
-                if(facingRight) hit.rigidbody.velocity += new Vector2(throwForce, 0);
-                else hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+                if(facingRight) hit.rigidbody.velocity += new Vector2(5, throwForce);
+                else hit.rigidbody.velocity += new Vector2(-5, throwForce);
                 speed = 10f;
                 yield return new WaitForSeconds(2);
                 brokeOut = false;
