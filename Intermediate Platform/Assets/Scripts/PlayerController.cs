@@ -62,7 +62,10 @@ public class PlayerController : MonoBehaviour {
         color.a = 255;
         this.GetComponent<SpriteRenderer>().color = color;
     }
-    
+    public bool getDirection()
+    {
+        return facingRight;
+    }
     public bool getGrab()
     {
         return canGrab;
