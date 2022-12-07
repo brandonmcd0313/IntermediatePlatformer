@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 public class ToolGrab : MonoBehaviour {
-    private GameObject tool;
+    private GameObject tool, past;
     bool facingRight; bool grabbed;
     [SerializeField] string playerCode; //P1 or P2, determines input mapping
     [SerializeField] float throwForce;
@@ -28,18 +28,35 @@ public class ToolGrab : MonoBehaviour {
             grabbed = false;
             //launch in direction
             facingRight = this.GetComponent<PlayerController>().getDirection();
-            if(facingRight)
-            {
-                tool.GetComponent<Rigidbody2D>().velocity += new Vector2(throwForce, 0);
-            }
-           else
-            {
-                tool.GetComponent<Rigidbody2D>().velocity += new Vector2(-throwForce, 0);
-            }
+         
+            past = tool;
+            StartCoroutine(launch());
+            
+            
         }
 
     }
-
+    IEnumerator launch()
+    {
+        tool.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 0.5f);
+        tool = null;
+        past.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        past.GetComponent<Rigidbody2D>().gravityScale = -0.2f;
+        if (facingRight)
+        {
+            past.GetComponent<Rigidbody2D>().velocity += new Vector2(throwForce, 0);
+        }
+        else
+        {
+            past.GetComponent<Rigidbody2D>().velocity += new Vector2(-throwForce, 0);
+        }
+        yield return new WaitForSeconds(0.2f);
+        //disable trigger so it can hit stuffs
+        print("a");
+        past.GetComponent<Collider2D>().isTrigger = false;
+        yield return new WaitForSeconds(0.2f);
+        past.GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Tool")
