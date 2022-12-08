@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class objectThrow : MonoBehaviour
 {
-
+	public bool rightPush;
 	// Use this for initialization
 	void Start()
 	{
@@ -23,7 +23,7 @@ public class objectThrow : MonoBehaviour
         {
 			if(other.tag == "Player")
             {
-				if(other.GetComponent<PlayerController>().facingRight)
+				if(rightPush)
                 {
 					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
 				}
@@ -31,6 +31,8 @@ public class objectThrow : MonoBehaviour
                 {
 					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
 				}
+
+				
             }
 
 
