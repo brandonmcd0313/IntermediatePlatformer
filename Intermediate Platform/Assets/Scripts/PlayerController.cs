@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rb2d; Color color;
     Transform init; public static int tutWait;
     public string playerCode; //P1 or P2, determines input mapping
-    public bool grabbed; //if the player has grabbed the other player or not
+    public bool grabbed, weaponGrabbed; //if the player has grabbed the other player or not
     RaycastHit2D hit;
     public Slider smashMeter;
     public GameObject smashMeterObject;
@@ -78,12 +78,24 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
+        smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
         //error, grabbed player is able to grab the player grabbing them.
-        if(hit.transform != null)
+        if (hit.transform != null)
         {
-            if (Input.GetButtonDown("Fire2" + playerCode) && running)
+            if (this.playerCode == "P1")
             {
-                smashMeter.value += 50;
+                if (Input.GetButtonDown("Fire2" + playerCode) && running)
+                {
+                    smashMeter.value += 50;
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown("Fire2" + playerCode) && running)
+                {
+                    smashMeter.value += 50;
+                }
             }
         }
 
@@ -91,10 +103,12 @@ public class PlayerController : MonoBehaviour {
         {
             if (facingRight)
             {
+                
                 //while the player hasn't grabbed anything check if theres a player infront
-                if (!grabbed)
+                if (!grabbed && !weaponGrabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x + 2, transform.position.y), Vector2.right, 2f);
+
                 }
 
                 if (Input.GetButton("Fire1" + playerCode) && getGrab())
@@ -106,8 +120,6 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
-                        ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
-                        smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
                         
                         grabbed = true;
@@ -116,6 +128,14 @@ public class PlayerController : MonoBehaviour {
                             smashMeter.value = 15;
                             StartCoroutine(smashin());
                         }
+                    }
+                    else if (((hit.transform != null && hit.transform.tag == "Weapon") || weaponGrabbed) && !brokeOut)
+                    {
+                        hit.rigidbody.velocity = Vector2.zero;
+                        hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        speed = 3.5f;
+
+                        weaponGrabbed = true;
                     }
                     else
                     {
@@ -133,11 +153,17 @@ public class PlayerController : MonoBehaviour {
                     smashMeterObject.SetActive(false);
                     running = false;
                 }
+                else if (weaponGrabbed)
+                {
+                    hit.rigidbody.velocity += new Vector2(throwForce, 0);
+                    speed = 10f;
+                    weaponGrabbed = false;
+                }
             }
             else
             {
                 //while the player hasn't grabbed anything check if theres a player infront
-                if (!grabbed)
+                if (!grabbed && !weaponGrabbed)
                 {
                     hit = Physics2D.Raycast(new Vector3(transform.position.x - 2, transform.position.y), Vector2.left, 2f);
                 }
@@ -161,6 +187,14 @@ public class PlayerController : MonoBehaviour {
                             StartCoroutine(smashin());
                         }
                     }
+                    else if (((hit.transform != null && hit.transform.tag == "Weapon") || weaponGrabbed) && !brokeOut)
+                    {
+                        hit.rigidbody.velocity = Vector2.zero;
+                        hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        speed = 3.5f;
+
+                        weaponGrabbed = true;
+                    }
                     else
                     {
                         grabbed = false;
@@ -177,6 +211,12 @@ public class PlayerController : MonoBehaviour {
                     StopCoroutine(smashin());
                     smashMeterObject.SetActive(false);
                     running = false;
+                }
+                else if(weaponGrabbed)
+                {
+                    hit.rigidbody.velocity += new Vector2(-throwForce, 0);
+                    speed = 10f;
+                    weaponGrabbed = false;
                 }
             }
         }
@@ -341,15 +381,25 @@ public class PlayerController : MonoBehaviour {
             rb2d.velocity += new Vector2(bonkForce, 0);
         }
     }
-/*
-    void OnTriggerEnter2D(Collider2D col)
+
+    
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if(col.gameObject.tag == "Pickup")
+        /*if(other.gameObject.tag == "Pickup")
         {
-            col.gameObject.GetComponent<Pickup>().grab(this.gameObject);
+            other.gameObject.GetComponent<Pickup>().grab(this.gameObject);
+        } */
+
+        if(other.tag == "Player")
+        {
+            print("destroyed");
+            Destroy(other.gameObject);
         }
     }
-    */
+
+    
+    
 
 }
       
