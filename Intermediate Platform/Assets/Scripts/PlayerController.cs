@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 else if (weaponGrabbed)
                 {
+                    hit.collider.isTrigger = true;
                     hit.rigidbody.velocity += new Vector2(throwForce, 0);
                     speed = 10f;
                     weaponGrabbed = false;
@@ -189,6 +190,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     else if (((hit.transform != null && hit.transform.tag == "Weapon") || weaponGrabbed) && !brokeOut)
                     {
+                        
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
                         speed = 3.5f;
@@ -214,6 +216,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 else if(weaponGrabbed)
                 {
+                    hit.collider.isTrigger = true;
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
                     speed = 10f;
                     weaponGrabbed = false;
@@ -391,11 +394,7 @@ public class PlayerController : MonoBehaviour {
             other.gameObject.GetComponent<Pickup>().grab(this.gameObject);
         } */
 
-        if(other.tag == "Player")
-        {
-            print("destroyed");
-            Destroy(other.gameObject);
-        }
+        
     }
 
     
