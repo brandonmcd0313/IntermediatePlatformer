@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,12 +51,31 @@ public class ToolGrab : MonoBehaviour {
         {
             past.GetComponent<Rigidbody2D>().velocity += new Vector2(-throwForce, 0);
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         //disable trigger so it can hit stuffs
         print("a");
-        past.GetComponent<Collider2D>().isTrigger = false;
-        yield return new WaitForSeconds(0.2f);
-        past.GetComponent<Rigidbody2D>().gravityScale = 1;
+        try
+        {
+
+            past.GetComponent<Collider2D>().isTrigger = false;
+            past.GetComponent<Tool>().thrown(this.gameObject);
+        }
+        catch (MissingReferenceException)
+        {
+            //eat it
+        }
+        yield return new WaitForSeconds(0.5f);
+        try
+        {
+
+            past.GetComponent<Rigidbody2D>().gravityScale = 1.5f;
+        }
+        catch (MissingReferenceException)
+        {
+            //eat it
+        }
+
+
     }
     void OnTriggerEnter2D(Collider2D col)
     {
