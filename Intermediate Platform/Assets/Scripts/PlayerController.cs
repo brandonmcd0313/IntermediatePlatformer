@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+       //print(this.name + canJump);
+       //print(this.name + canJump);
         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
         //error, grabbed player is able to grab the player grabbing them.
@@ -265,18 +267,21 @@ public class PlayerController : MonoBehaviour {
                     transform.localScale.z);
             }
 
-            //jump
-            canJump = false;
+            
             //check if there is a platform beneath the player
             if (Physics2D.OverlapArea(j1.transform.position, j2.transform.position) != null &&
                 Physics2D.OverlapArea(j1.transform.position, j2.transform.position).gameObject.tag == "Platform")
             { canJump = true; }
             //if jumping on onther player
-            if (Physics2D.OverlapArea(j1.transform.position, j2.transform.position) != null &&
+            else if (Physics2D.OverlapArea(j1.transform.position, j2.transform.position) != null &&
                (Physics2D.OverlapArea(j1.transform.position, j2.transform.position).gameObject.tag == "Player") &&
                 Physics2D.OverlapArea(j1.transform.position, j2.transform.position).gameObject != this.gameObject)
             {
                 canJump = true;
+            }
+            else
+            {
+                canJump = false;
             }
 
 
