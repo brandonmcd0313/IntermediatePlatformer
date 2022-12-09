@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     else if (((hit.transform != null && hit.transform.tag == "Weapon") || weaponGrabbed) && !brokeOut)
                     {
+                        hit.transform.GetComponent<objectThrow>().rightPush = true;
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
                         speed = 3.5f;
@@ -190,7 +191,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     else if (((hit.transform != null && hit.transform.tag == "Weapon") || weaponGrabbed) && !brokeOut)
                     {
-                        
+                        hit.transform.GetComponent<objectThrow>().rightPush = false;
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
                         speed = 3.5f;
