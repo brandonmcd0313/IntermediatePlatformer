@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     private bool canMove, canJump, jumping;
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
     public bool facingRight = true;
-    public GameObject j1, j2; //jump check objects 
+    public GameObject j1, j2; //jump check objects
     Rigidbody2D rb2d; Color color;
     Transform init; public static int tutWait;
     public string playerCode; //P1 or P2, determines input mapping
@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour {
     public bool running, brokeOut;
     private Vector2 ViewportPos;
     public bool canGrab;
+
+
+    
 
     void Start () {
         setGrab(true);
@@ -78,6 +81,9 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+        
+
         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
         //error, grabbed player is able to grab the player grabbing them.
@@ -370,6 +376,8 @@ public class PlayerController : MonoBehaviour {
         smashMeterObject.SetActive(false);
         running = false;
     }
+
+
 
     public void bonk(bool direction)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class objectThrow : MonoBehaviour
 {
 	public bool rightPush;
+	
 	// Use this for initialization
 	void Start()
 	{
@@ -14,7 +15,10 @@ public class objectThrow : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		if(transform.position.y <= -18)
+        {
+			Destroy(gameObject);
+        }
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
