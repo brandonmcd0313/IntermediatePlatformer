@@ -56,6 +56,7 @@ public class ToolGrab : MonoBehaviour {
         past.GetComponent<Collider2D>().isTrigger = false;
         yield return new WaitForSeconds(0.2f);
         past.GetComponent<Rigidbody2D>().gravityScale = 1;
+        past.GetComponent<Tool>().thrown(this.gameObject);
     }
     void OnTriggerEnter2D(Collider2D col)
     {
