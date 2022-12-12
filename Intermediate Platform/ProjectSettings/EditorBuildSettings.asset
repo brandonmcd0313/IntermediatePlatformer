@@ -14,3 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/level2.unity
     guid: 2031e110edb7e12428cfdf085f581571
+  - enabled: 1
+    path: Assets/Scenes/level3.unity
+    guid: 83451a199c0b9124b93fb7f9bd63cb53
+  - enabled: 1
+    path: Assets/Scenes/EndGame.unity
+    guid: 45affdf7008952440b40f839d472d6c7
+  - enabled: 1
+    path: Assets/Scenes/Leaderboard.unity
+    guid: 7116b5b6669c57841a17b2954a832bc1
