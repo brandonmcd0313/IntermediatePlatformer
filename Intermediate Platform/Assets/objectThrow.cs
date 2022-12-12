@@ -5,7 +5,7 @@ using UnityEngine;
 public class objectThrow : MonoBehaviour
 {
 	public bool rightPush;
-	
+	public bool grabbed;
 	// Use this for initialization
 	void Start()
 	{
@@ -23,28 +23,30 @@ public class objectThrow : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.tag != null)
-        {
-			if(other.tag == "Player")
-            {
-				if(rightPush)
-                {
-					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
+		if (other.tag != null)
+		{
+			if (other.tag == "Player" && !grabbed)
+			{
+				
+				if (rightPush)
+				{
+					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(9, 0);
 				}
 				else
-                {
-					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
+				{
+					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(-9, 0);
 				}
+			}
 
-				
-            }
-
-
-			if(other.tag != "BonkDetect")
+			if(other.tag != "BonkDetect" && !grabbed)
             {
 				Destroy(gameObject);
 			}
 			
-        }
+
+		}
+		
+
 	}
+
 }

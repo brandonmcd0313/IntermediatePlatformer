@@ -10,17 +10,37 @@ public class InteractionManager : MonoBehaviour
     Rigidbody2D rb2d; Vector3 init;[SerializeField] GameObject scorePop;
     [SerializeField] int deathCost;
     [SerializeField] int hitCost;
-    bool dying = false, hit;
+    bool dying = false, hit, spiked;
+    public bool bonkOverlap;
+
+    Vector3 pos1, pos2;
+
     // Use this for initialization 
     void Start()
     {
         init = this.transform.position;
         rb2d = this.GetComponent<Rigidbody2D>();
+        if (this.gameObject.name == "Player1")
+        {
+            pos1 = transform.position;
+        }
+        if (this.gameObject.name == "Player2")
+        {
+            pos2 = transform.position;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (this.gameObject.name == "Player1")
+        {
+            pos1 = transform.position;
+        }
+        if (this.gameObject.name == "Player2")
+        {
+            pos2 = transform.position;
+        }
         //keep this player on the screen!
         {
 
@@ -73,20 +93,44 @@ public class InteractionManager : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Weapon")
+        if (other.tag == "Weapon" && !other.transform.GetComponent<objectThrow>().grabbed)
         {
-            //respawn them but take away points
+
             GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
             pop.GetComponent<ScorePopUp>().setVal(hitCost);
+
             if (this.gameObject.name == "Player1" && !hit)
             {
+
                 ScoreManager.score1 += hitCost;
+                ScoreManager.score2 -= hitCost * 2;
                 StartCoroutine(cooldown());
             }
             else if (this.gameObject.name == "Player2" && !hit)
             {
+
                 ScoreManager.score2 += hitCost;
+                ScoreManager.score1 -= hitCost * 2;
                 StartCoroutine(cooldown());
+            }
+        }
+
+        if (other.tag == "spike" && !spiked)
+        {
+            GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
+            pop.GetComponent<ScorePopUp>().setVal(hitCost);
+
+            if (this.gameObject.name == "Player1" && !hit)
+            {
+
+                ScoreManager.score1 += hitCost;
+                StartCoroutine(spikeCooldown());
+            }
+            else if (this.gameObject.name == "Player2" && !hit)
+            {
+
+                ScoreManager.score2 += hitCost;
+                StartCoroutine(spikeCooldown());
             }
         }
     }
@@ -95,5 +139,11 @@ public class InteractionManager : MonoBehaviour
         hit = true;
         yield return new WaitForSeconds(0.1f);
         hit = false;
+    }
+    IEnumerator spikeCooldown()
+    {
+        spiked = true;
+        yield return new WaitForSeconds(0.25f);
+        spiked = false;
     }
 }

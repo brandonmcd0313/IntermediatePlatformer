@@ -81,14 +81,15 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
+
+
 
         
 
-=======
+ //=======
        //print(this.name + canJump);
        //print(this.name + canJump);
->>>>>>> a0a737d35eaadf8d4ddca30054aadc3aa9cd5efb
+  //>>>>>>> a0a737d35eaadf8d4ddca30054aadc3aa9cd5efb
         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
         //error, grabbed player is able to grab the player grabbing them.
@@ -208,6 +209,8 @@ public class PlayerController : MonoBehaviour {
                         speed = 3.5f;
 
                         weaponGrabbed = true;
+
+                        hit.transform.GetComponent<objectThrow>().grabbed = true;
                     }
                     else
                     {
@@ -232,6 +235,7 @@ public class PlayerController : MonoBehaviour {
                     hit.rigidbody.velocity += new Vector2(-throwForce, 0);
                     speed = 10f;
                     weaponGrabbed = false;
+                    hit.transform.GetComponent<objectThrow>().grabbed = false;
                 }
             }
         }
@@ -316,6 +320,13 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 rb2d.gravityScale = 3;
+            }
+
+            if(this.transform.position.y < -18)
+            {
+                grabbed = false;
+                weaponGrabbed = false;
+                speed = 10f;
             }
             
 
