@@ -81,14 +81,7 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-
-        
-
-=======
-       //print(this.name + canJump);
-       //print(this.name + canJump);
->>>>>>> a0a737d35eaadf8d4ddca30054aadc3aa9cd5efb
+       
         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
         //error, grabbed player is able to grab the player grabbing them.
@@ -350,9 +343,15 @@ public class PlayerController : MonoBehaviour {
         //make sure they are still in the area
             if ((col.transform.parent.position.y + 4 <= transform.position.y) && Mathf.Abs(col.transform.parent.position.x - transform.position.x) <= 2)
             {
-
-                GameObject other = col.gameObject.transform.parent.gameObject;
-
+            if (facingRight)
+            {
+                rb2d.velocity += new Vector2(bonkForce/4, 0);
+            }
+            else
+            {
+                rb2d.velocity += new Vector2(-bonkForce/4, 0);
+            }
+            GameObject other = col.gameObject.transform.parent.gameObject;
                 other.GetComponent<PlayerController>().bonk(facingRight);
             }
         

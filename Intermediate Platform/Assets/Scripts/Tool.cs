@@ -6,7 +6,7 @@ public class Tool : MonoBehaviour {
     [SerializeField] float size;
     [SerializeField] GameObject pop;
     float homeX, homeY; float randDiff;
-    bool vibra; bool cold; GameObject daddy;
+    bool vibra;  GameObject daddy;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +23,7 @@ public class Tool : MonoBehaviour {
 
     public void thrown(GameObject play)
     {
-        daddy = play; cold = true; 
+        daddy = play; //cold = true; 
         Invoke("kill", 2.5f);
     }
     void kill()
@@ -43,6 +43,11 @@ public class Tool : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D colsion)
     {
+        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.5f;
+        //reassign the polygon collider
+        Destroy(this.gameObject.GetComponent<PolygonCollider2D>());
+        this.gameObject.AddComponent<PolygonCollider2D>();
+
         GameObject poppy;
         GameObject col = colsion.collider.gameObject;
         print("OnCOl Tool");

@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (!timerRunning)
+		if (!timerRunning && timer != null)
 		{
 			StartCoroutine(timeSet(180));
 		}

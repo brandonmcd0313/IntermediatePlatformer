@@ -18,14 +18,22 @@ public class ToolGrab : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButton("Fire3" + playerCode) && (tool!= null))
+        if(Input.GetButton("Fire3" + playerCode) && (tool != null))
         {
-            grabbed = true;
-            tool.GetComponent<Tool>().stopVibration();
-            tool.transform.position = this.transform.position;
+            //make sure tool is in a zone to grab it!
+            if((Mathf.Abs(tool.transform.position.x - this.transform.position.x) < 1 &&
+                Mathf.Abs(tool.transform.position.y - this.transform.position.y) < 1) || grabbed)
+            {
+                print("grabbed");
+                grabbed = true;
+                tool.GetComponent<Tool>().stopVibration();
+                tool.transform.position = this.transform.position;
+                return;
+            }
         }
         else if(grabbed)
         {
+            print("launch");
             grabbed = false;
             //launch in direction
             facingRight = this.GetComponent<PlayerController>().getDirection();
@@ -56,8 +64,9 @@ public class ToolGrab : MonoBehaviour {
         print("a");
         try
         {
-
-            past.GetComponent<Collider2D>().isTrigger = false;
+            //reassign 
+            Destroy(past.GetComponent<PolygonCollider2D>());
+            past.AddComponent<PolygonCollider2D>();
             past.GetComponent<Tool>().thrown(this.gameObject);
         }
         catch (MissingReferenceException)
@@ -79,17 +88,12 @@ public class ToolGrab : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
+        print("ONTRIG");
         if(col.gameObject.tag == "Tool")
         {
             tool = col.gameObject;
         }
     }
 
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if(!grabbed)
-        {
-            tool = null;
-        }
-    }
+   
 }
