@@ -47,7 +47,7 @@ public class SpawnZone : MonoBehaviour {
 	IEnumerator newSpawn()
 	{
 		print("begin");
-		float wait = UnityEngine.Random.Range(3f, 10f);
+		float wait = UnityEngine.Random.Range(3f, 7f);
 		yield return new WaitForSeconds(wait);
         //spawn the pickup 
         current = Instantiate(pickup, this.transform.position, Quaternion.identity);
