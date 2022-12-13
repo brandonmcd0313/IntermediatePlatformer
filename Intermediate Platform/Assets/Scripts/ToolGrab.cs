@@ -89,9 +89,12 @@ public class ToolGrab : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
         print("ONTRIG");
+        if(tool == null)
+        { 
         if(col.gameObject.tag == "Tool")
         {
             tool = col.gameObject;
+        }
         }
     }
 
