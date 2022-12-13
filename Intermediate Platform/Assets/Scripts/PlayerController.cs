@@ -32,10 +32,14 @@ public class PlayerController : MonoBehaviour {
     private Vector2 ViewportPos;
     public bool canGrab;
 
+    AudioSource aud;
+    public AudioClip bonkSound, jump;
 
-    
+    public bool canBonk = true;
 
-    void Start () {
+    void Start () 
+    {
+        aud = gameObject.GetComponent<AudioSource>();
         setGrab(true);
         canMove = true;
         if(PlayerPrefs.GetInt("Tutorial") == 1)
@@ -163,6 +167,8 @@ public class PlayerController : MonoBehaviour {
                     hit.rigidbody.velocity += new Vector2(throwForce, 0);
                     speed = 10f;
                     weaponGrabbed = false;
+                    hit.transform.GetComponent<objectThrow>().grabbed = false;
+                    hit.transform.GetComponent<objectThrow>().idle = false;
                 }
             }
             else
@@ -202,6 +208,8 @@ public class PlayerController : MonoBehaviour {
                         weaponGrabbed = true;
 
                         hit.transform.GetComponent<objectThrow>().grabbed = true;
+
+                        hit.transform.GetComponent<objectThrow>().idle = false;
                     }
                     else
                     {
@@ -283,16 +291,23 @@ public class PlayerController : MonoBehaviour {
             {
                 canJump = true;
             }
+            else if (Physics2D.OverlapArea(j1.transform.position, j2.transform.position) != null &&
+               (Physics2D.OverlapArea(j1.transform.position, j2.transform.position).gameObject.tag == "Weapon") &&
+                Physics2D.OverlapArea(j1.transform.position, j2.transform.position).gameObject != this.gameObject)
+            {
+                canJump = true;
+            }
             else
             {
                 canJump = false;
             }
 
 
-                //the moment they press the space bar, apply up force
-                if (Input.GetButtonDown("Jump" + playerCode) && canJump)
+            //the moment they press the space bar, apply up force
+            if (Input.GetButtonDown("Jump" + playerCode) && canJump)
             {
                 rb2d.AddForce(new Vector3(0, jumpForce));
+                aud.PlayOneShot(jump);
             }
         }
 
@@ -339,14 +354,16 @@ public class PlayerController : MonoBehaviour {
     {
 
         //if hit the bonk zone of the other player
-        if (col.gameObject.tag == "BonkDetect" && col.gameObject.transform.parent != this.gameObject)
+        if (col.gameObject.tag == "BonkDetect" && col.gameObject.transform.parent != this.gameObject && canBonk)
         {
+            
             StartCoroutine(BonkConformation(col));
         }
     }
 
     IEnumerator BonkConformation(Collider2D col)
     {
+        canBonk = false;
         //wait till they jump
         yield return new WaitUntil(() => (Input.GetButton("Jump" + playerCode) && canJump));
         //make sure they are still in the area
@@ -360,9 +377,14 @@ public class PlayerController : MonoBehaviour {
             {
                 rb2d.velocity += new Vector2(-bonkForce/4, 0);
             }
-            GameObject other = col.gameObject.transform.parent.gameObject;
+                GameObject other = col.gameObject.transform.parent.gameObject;
                 other.GetComponent<PlayerController>().bonk(facingRight);
             }
+
+        aud.PlayOneShot(bonkSound);
+
+        yield return new WaitForSeconds(0.25f);
+        canBonk = true;
         
     }
 
