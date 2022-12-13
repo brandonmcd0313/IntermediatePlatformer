@@ -203,8 +203,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 9178983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.14, y: 5.71, z: 0}
-  m_LocalScale: {x: 4.7917156, y: 10.316401, z: 1}
+  m_LocalPosition: {x: 23.001, y: 4.774, z: 0}
+  m_LocalScale: {x: 5.0690494, y: 12.188411, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 18
@@ -1489,7 +1489,7 @@ MonoBehaviour:
   speed: 10
   jumpForce: 2000
   bonkForce: 10
-  throwForce: 15
+  throwForce: 12
   facingRight: 1
   j1: {fileID: 679494693}
   j2: {fileID: 112092715}
@@ -1593,6 +1593,7 @@ MonoBehaviour:
   scorePop: {fileID: 1512638905414484, guid: dc576fcc2fd0ac346bad314a757b094c, type: 2}
   deathCost: -100
   hitCost: 0
+  bonkOverlap: 0
 --- !u!114 &1077751799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2549,7 +2550,7 @@ MonoBehaviour:
   speed: 10
   jumpForce: 2000
   bonkForce: 10
-  throwForce: 15
+  throwForce: 12
   facingRight: 1
   j1: {fileID: 1988792265}
   j2: {fileID: 110705903}
@@ -2575,6 +2576,7 @@ MonoBehaviour:
   scorePop: {fileID: 1512638905414484, guid: dc576fcc2fd0ac346bad314a757b094c, type: 2}
   deathCost: -100
   hitCost: 0
+  bonkOverlap: 0
 --- !u!114 &1882250049
 MonoBehaviour:
   m_ObjectHideFlags: 0
