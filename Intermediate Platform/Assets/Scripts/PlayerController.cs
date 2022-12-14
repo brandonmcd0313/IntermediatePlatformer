@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     //Q to jump
     //other bindings are E, [, ], 6
 
+    Animator anim;
+
     // Use this for initialization
     private bool canMove, canJump, jumping;
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
