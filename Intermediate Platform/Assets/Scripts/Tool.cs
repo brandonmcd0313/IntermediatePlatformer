@@ -6,11 +6,20 @@ using UnityEngine;
 public class Tool : MonoBehaviour {
     [SerializeField] float size;
     [SerializeField] GameObject pop;
+    public float startGravityScale = -0.5f;
+    public float endGravityScale = 2f;
+    public float duration = 2f;
+
+    private Rigidbody2D rb;
     float homeX, homeY; float randDiff;
     bool vibra;  GameObject daddy; bool thro = false;
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        //set all values to default
+        this.GetComponent<BoxCollider2D>().isTrigger = true;
+        daddy = null; thro = false;
         vibra = true;
         randDiff = Random.Range(-100f, 100f);
         homeX = this.transform.position.x;
@@ -28,7 +37,8 @@ public class Tool : MonoBehaviour {
         //this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         daddy = play; //cold = true;
         StartCoroutine(launch(tf));
-        Invoke("enable", 0.1f);
+        thro = true;
+        StartCoroutine(ChangeGravityScaleOverTime());
         Invoke("kill", 2.5f);
         
     }
@@ -37,7 +47,7 @@ public class Tool : MonoBehaviour {
         GameObject past = this.gameObject;
       //  running = true;
         past.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        past.GetComponent<Rigidbody2D>().gravityScale = -0.2f;
+      //  past.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
         if (daddy.GetComponent<PlayerController>().facingRight)
         {
             past.GetComponent<Rigidbody2D>().velocity += new Vector2(throwForce, 0);
@@ -46,17 +56,26 @@ public class Tool : MonoBehaviour {
         {
             past.GetComponent<Rigidbody2D>().velocity += new Vector2(-throwForce, 0);
         }
-        yield return new WaitForSeconds(0.1f);
-        //disable trigger so it can hit stuffs
-        // print("a");
-        //reassign 
-        past.GetComponent<BoxCollider2D>().isTrigger = false;
-           // Destroy(past.GetComponent<BoxCollider2D>());
-            //past.AddComponent<BoxCollider2D>();
         yield return new WaitForSeconds(0.2f);
-        past.GetComponent<Rigidbody2D>().gravityScale = 1.5f;
+        //disable trigger so it can hit stuffs
+      
+        past.GetComponent<BoxCollider2D>().isTrigger = false;
+        
       
 
+    }
+    private IEnumerator ChangeGravityScaleOverTime()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            print("AAAAA");
+            float gravityScale = Mathf.Lerp(startGravityScale, endGravityScale, elapsedTime / duration);
+            rb.gravityScale = gravityScale;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        rb.gravityScale = endGravityScale;
     }
     void kill()
     {
@@ -66,6 +85,10 @@ public class Tool : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if(daddy != null && vibra)
+        {
+            Destroy(this.gameObject);
+        }
         //keep this player on the screen!
         {
 
@@ -96,14 +119,12 @@ public class Tool : MonoBehaviour {
            transform.localPosition = new Vector3(homeX, homeY + (size * Mathf.Sin(Time.time + randDiff)));
         }
     }
-    void enable()
-    {
-        thro = true;
-    }
+  
     void OnCollisionEnter2D(Collision2D colsion)
     {
         if (thro)
         {
+            print("Tool col");
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.5f;
             
             GameObject poppy;
@@ -115,11 +136,11 @@ public class Tool : MonoBehaviour {
             {
                 poppy = Instantiate(pop);
                 //daddy gets -100 points
-                if (daddy.name.Contains("1"))
+                if (col.gameObject.name.Contains("1"))
                 {
                     ScoreManager.score1 += -100;
                 }
-                if (daddy.name.Contains("2"))
+                if (col.gameObject.name.Contains("2"))
                 {
                     ScoreManager.score2 += -100;
                 }

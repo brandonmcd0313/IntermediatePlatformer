@@ -27,13 +27,17 @@ public class SpawnZone : MonoBehaviour {
 	void Update () {
         //check if pickup still exists
         //if not start cooldown for ANTOHER
+		if(current)
+		{
+			return;
+		}
 		if(tutWait == 1)
 		{
 			return;
 		}
 		else if(tutWait == 0 && !begun)
 		{
-            current = Instantiate(pickup, this.transform.position, Quaternion.identity);
+           current = (Instantiate(pickup, this.transform.position, Quaternion.identity));
 			begun = true;
         }
         if (current == null & !waitin)

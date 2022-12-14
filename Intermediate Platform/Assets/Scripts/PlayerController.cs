@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     //Q to jump
     //other bindings are E, [, ], 6
 
+    Animator anim;
+
     // Use this for initialization
     private bool canMove, canJump, jumping;
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour {
     
 
     void Start () {
+        anim = this.GetComponent<Animator>();
         setGrab(true);
         canMove = true;
         if(PlayerPrefs.GetInt("Tutorial") == 1)
