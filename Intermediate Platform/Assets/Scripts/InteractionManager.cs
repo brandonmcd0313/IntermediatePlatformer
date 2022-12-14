@@ -14,10 +14,13 @@ public class InteractionManager : MonoBehaviour
     public bool bonkOverlap;
 
     Vector3 pos1, pos2;
+    AudioSource aud;
+    public AudioClip fallSound, hitSound;
 
     // Use this for initialization 
     void Start()
     {
+        aud = gameObject.GetComponent<AudioSource>();
         init = this.transform.position;
         rb2d = this.GetComponent<Rigidbody2D>();
         if (this.gameObject.name == "Player1")
@@ -63,8 +66,9 @@ public class InteractionManager : MonoBehaviour
             if (this.transform.position.y < -18 && !dying)
             {
                 dying = true;
-
+                aud.PlayOneShot(fallSound);
                 Invoke("respawn", 1f);
+                
             }
 
 
@@ -77,7 +81,7 @@ public class InteractionManager : MonoBehaviour
     void respawn()
     {
         this.transform.localPosition = init;
-
+        
         //respawn them but take away points
         GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
         pop.GetComponent<ScorePopUp>().setVal(deathCost);
@@ -90,10 +94,11 @@ public class InteractionManager : MonoBehaviour
             ScoreManager.score2 += deathCost;
         }
         dying = false;
+        
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Weapon" && !other.transform.GetComponent<objectThrow>().grabbed)
+        if (other.tag == "Weapon" && !other.transform.GetComponent<objectThrow>().grabbed && !other.transform.GetComponent<objectThrow>().idle)
         {
 
             GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
@@ -113,6 +118,8 @@ public class InteractionManager : MonoBehaviour
                 ScoreManager.score1 -= hitCost * 2;
                 StartCoroutine(cooldown());
             }
+
+            aud.PlayOneShot(hitSound);
         }
 
         if (other.tag == "spike" && !spiked)
@@ -132,6 +139,7 @@ public class InteractionManager : MonoBehaviour
                 ScoreManager.score2 += hitCost;
                 StartCoroutine(spikeCooldown());
             }
+            aud.PlayOneShot(hitSound);
         }
     }
     IEnumerator cooldown()

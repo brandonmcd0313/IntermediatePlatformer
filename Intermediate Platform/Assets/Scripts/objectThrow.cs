@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class objectThrow : MonoBehaviour
 {
-	public bool rightPush;
-	public bool grabbed;
+	public bool rightPush; //the direction the player is pushed towards when hit with this object
+	public bool grabbed; //when the player grabs this item
+	public bool idle = true; //cannot hit player while idle 
 	// Use this for initialization
 	void Start()
 	{
