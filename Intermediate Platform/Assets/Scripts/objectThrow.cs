@@ -7,10 +7,13 @@ public class objectThrow : MonoBehaviour
 	public bool rightPush; //the direction the player is pushed towards when hit with this object
 	public bool grabbed; //when the player grabs this item
 	public bool idle = true; //cannot hit player while idle 
+	public AudioClip objectBurst;
+	AudioSource aud;
+	public bool playerHit;
 	// Use this for initialization
 	void Start()
 	{
-
+		aud = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -24,6 +27,7 @@ public class objectThrow : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
+
 		if (other.tag != null)
 		{
 			if (other.tag == "Player" && !grabbed)
@@ -37,17 +41,18 @@ public class objectThrow : MonoBehaviour
 				{
 					other.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(-9, 0);
 				}
-			}
-
-			if(other.tag != "BonkDetect" && !grabbed)
-            {
 				Destroy(gameObject);
 			}
+
 			
 
-		}
-		
 
+		}
+
+		if (other.tag != "BonkDetect" && !grabbed)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 }

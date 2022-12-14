@@ -7,8 +7,15 @@ public class SpawnZone : MonoBehaviour {
 	private bool avalible; private GameObject current;
 	[SerializeField] GameObject pickup; bool waitin;
 	public static int tutWait; bool begun;
+	public string taggy;
+
+	AudioSource aud;
+	public AudioClip weaponAud;
+	bool hit;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
+		aud = GetComponent<AudioSource>();
 		//if tutorial is happening wait untill it is exited
 		if(PlayerPrefs.GetInt("Tutorial") == 1)
 		{
@@ -24,7 +31,10 @@ public class SpawnZone : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
+		
+		
         //check if pickup still exists
         //if not start cooldown for ANTOHER
 		if(tutWait == 1)
@@ -42,8 +52,12 @@ public class SpawnZone : MonoBehaviour {
             waitin = true;
         }
 		
-	}	
 
+	}	
+	public void weaponSound()
+    {
+		aud.PlayOneShot(weaponAud);
+    }
 	IEnumerator newSpawn()
 	{
 		//print("begin");
