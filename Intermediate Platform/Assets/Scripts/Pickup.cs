@@ -6,10 +6,13 @@ public class Pickup : MonoBehaviour {
 	[SerializeField] float size;
 	[SerializeField] int value;
 	[SerializeField] GameObject scorePop;
+	AudioSource aud;
+	public AudioClip bloop;
 	float homeX, homeY; float randDiff;
 	bool instating;
 	// Use this for initialization
 	void Start () {
+		aud = GameObject.Find("Player1").GetComponent<AudioSource>();
 		randDiff = Random.Range(-100f, 100f);
 		homeX = this.transform.position.x;
         homeY = this.transform.position.y;
@@ -45,6 +48,7 @@ public class Pickup : MonoBehaviour {
             }
 			//destroy this object
 			print("rip");
+            aud.PlayOneShot(bloop);
             Destroy(this.gameObject);
         }
 

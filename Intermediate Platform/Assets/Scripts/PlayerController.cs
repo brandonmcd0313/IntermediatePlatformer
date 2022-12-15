@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x + 4.5f, transform.position.y);
                         speed = 3.5f;
                         if(!grabbed)
                         {
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         hit.transform.GetComponent<objectThrow>().rightPush = true;
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x + 4.5f, transform.position.y);
                         speed = 3.5f;
 
                         weaponGrabbed = true;
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x - 3, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x - 4.5f, transform.position.y);
                         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
                         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;

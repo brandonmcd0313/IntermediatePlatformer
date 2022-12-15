@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pipe : MonoBehaviour {
 	[SerializeField] Sprite[] stage;
 	[SerializeField] float increment;
     SpriteRenderer sr; int curStage = -1;
 	private float value;
+	AudioSource aud;
+	public AudioClip epic;
 	// Use this for initialization
 	void Start () {
+		aud = GameObject.Find("Player1").GetComponent<AudioSource>();
 		value = 1;
 		sr = gameObject.GetComponent<SpriteRenderer>();
 		stageUp();
@@ -34,7 +38,11 @@ public class Pipe : MonoBehaviour {
 			Destroy(this.gameObject.GetComponent<PolygonCollider2D>());
 			this.gameObject.AddComponent<PolygonCollider2D>();
 		}
-		else { 
+		else {
+
+			//epic sound
+			aud.PlayOneShot(epic);
+			Invoke("nextScene", 4f);
 		}
 	}
     void OnCollisionEnter2D(Collision2D colsion)
@@ -45,5 +53,11 @@ public class Pipe : MonoBehaviour {
 			value++;
 		}
 	}
-    
+    void nextScene()
+    {
+        SceneManager.LoadScene(2);
+
+
     }
+
+}

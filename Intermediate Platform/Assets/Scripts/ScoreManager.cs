@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour 
@@ -8,15 +9,16 @@ public class ScoreManager : MonoBehaviour
 	public static int score1; //player one score
 	public static int score2; //player two score
 	public Text scoreText1, scoreText2; //player score Texts, different for every scene
-
+	AudioSource aud;
+	public AudioClip win;
 	//timer stuff
 	public bool timerRunning;
 	public Text timer;
 	// Use this for initialization
 	void Start ()
 	{
-		
-	}
+        aud = GameObject.Find("Player1").GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -51,7 +53,14 @@ public class ScoreManager : MonoBehaviour
 			float seconds = Mathf.FloorToInt(time % 60);
 			timer.text = "" + minutes + ":" + seconds;
 			yield return new WaitForSeconds(0);
+			if (score1 <= 0 || score2 <= 0)
+			{
+				break;
+			}
 		}
+		aud.PlayOneShot(win);
+		yield return new WaitForSeconds(3f);
+		SceneManager.LoadScene(4);
 
 	}
 }

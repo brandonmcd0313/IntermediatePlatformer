@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,8 +18,16 @@ public class MenuThread : MonoBehaviour {
 
 	void Update()
 	{
-		//on press
-		if (Input.GetButtonDown("VerticalP1") || Input.GetButtonDown("VerticalP2"))
+        if (Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Alpha2))
+        {
+			Application.Quit();
+        }
+        if (Input.GetKey(KeyCode.Keypad1) && Input.GetKey(KeyCode.Keypad2))
+        {
+            Application.Quit();
+        }
+        //on press
+        if (Input.GetButtonDown("VerticalP1") || Input.GetButtonDown("VerticalP2"))
 		{
 			//down
 			if (current != 2 && (Input.GetAxis("VerticalP1") < 0 || Input.GetAxis("VerticalP2") < 0))

@@ -246,6 +246,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2a06532a7b3df8645b161a80b0859e70, type: 3}
   - {fileID: 21300000, guid: 4eecc127bf463ed44a13069553388dc6, type: 3}
   increment: 11
+  epic: {fileID: 0}
 --- !u!1 &110705903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,6 +1432,7 @@ GameObject:
   - component: {fileID: 1077751794}
   - component: {fileID: 1077751793}
   - component: {fileID: 1077751800}
+  - component: {fileID: 1077751801}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -1526,10 +1528,10 @@ MonoBehaviour:
   running: 0
   brokeOut: 0
   canGrab: 0
-  bonkSound: {fileID: 0}
-  jump: {fileID: 0}
-  grabSound: {fileID: 0}
-  breakSound: {fileID: 0}
+  bonkSound: {fileID: 8300000, guid: f0f874e8cf8aedd42bd0b25aec260ac8, type: 3}
+  jump: {fileID: 8300000, guid: d3bcb5dd14d75b34ea483c8eb4d9228b, type: 3}
+  grabSound: {fileID: 8300000, guid: c4e99ebe9f8ab1543be2671dc3a5a15c, type: 3}
+  breakSound: {fileID: 8300000, guid: d6b1596855cdf9243bdd3eb5977e167c, type: 3}
   canBonk: 1
 --- !u!50 &1077751795
 Rigidbody2D:
@@ -1624,8 +1626,8 @@ MonoBehaviour:
   deathCost: -100
   hitCost: 0
   bonkOverlap: 0
-  fallSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  fallSound: {fileID: 8300000, guid: 701b0c0668d60ba4ab6a20e681516487, type: 3}
+  hitSound: {fileID: 8300000, guid: 6fedf6bd52327904d9b064c2d2483a1e, type: 3}
 --- !u!114 &1077751799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,6 +1658,86 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!82 &1077751801
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1077751792}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1151588010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,6 +2542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText1: {fileID: 811705761}
   scoreText2: {fileID: 374138405}
+  win: {fileID: 0}
   timerRunning: 0
   timer: {fileID: 0}
 --- !u!1 &1850455329
@@ -2825,8 +2908,8 @@ MonoBehaviour:
   canGrab: 0
   bonkSound: {fileID: 8300000, guid: f0f874e8cf8aedd42bd0b25aec260ac8, type: 3}
   jump: {fileID: 8300000, guid: d3bcb5dd14d75b34ea483c8eb4d9228b, type: 3}
-  grabSound: {fileID: 0}
-  breakSound: {fileID: 0}
+  grabSound: {fileID: 8300000, guid: c4e99ebe9f8ab1543be2671dc3a5a15c, type: 3}
+  breakSound: {fileID: 8300000, guid: d6b1596855cdf9243bdd3eb5977e167c, type: 3}
   canBonk: 1
 --- !u!114 &1882250048
 MonoBehaviour:

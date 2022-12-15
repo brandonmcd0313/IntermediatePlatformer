@@ -13,7 +13,7 @@ public class LeaderboardSetting : MonoBehaviour {
 	[SerializeField] Text nameInput; int level;
 	bool player; //p1 is false, p2 is true
 	void Start () {
-        ScoreManager.score1 = 900;
+       // ScoreManager.score1 = 900;
         //PlayerPrefs.DeleteAll();
         StartCoroutine(flash());
 		if(ScoreManager.score1 > ScoreManager.score2)

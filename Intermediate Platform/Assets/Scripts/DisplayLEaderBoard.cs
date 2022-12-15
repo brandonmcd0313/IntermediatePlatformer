@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DisplayLEaderBoard : MonoBehaviour {
@@ -32,6 +33,14 @@ public class DisplayLEaderBoard : MonoBehaviour {
     void Update()
     {
         //exit this scene script goes here
+        if (Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Alpha2))
+        {
+            SceneManager.LoadScene(0);
+        }
+        if (Input.GetKey(KeyCode.Keypad1) && Input.GetKey(KeyCode.Keypad2))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 	IEnumerator displayValues()
 	{
