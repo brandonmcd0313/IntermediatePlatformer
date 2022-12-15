@@ -133,7 +133,7 @@ public class InteractionManager : MonoBehaviour
                 ScoreManager.score1 += hitCost;
                 StartCoroutine(spikeCooldown());
             }
-            else if (this.gameObject.name == "Player2" && !hit)
+            if (this.gameObject.name == "Player2" && !hit)
             {
 
                 ScoreManager.score2 += hitCost;
