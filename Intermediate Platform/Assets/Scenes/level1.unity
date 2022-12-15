@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &12044760
 Transform:
   m_ObjectHideFlags: 0
@@ -233,6 +235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &153163924
 Transform:
   m_ObjectHideFlags: 0
@@ -1449,6 +1453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b03e610c34c8140851aa87f85910f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bitten: {fileID: 0}
+  bite: {fileID: 0}
+  origin: {fileID: 0}
   speed: 10
   jumpForce: 2000
   bonkForce: 10
@@ -1464,6 +1471,9 @@ MonoBehaviour:
   running: 0
   brokeOut: 0
   canGrab: 0
+  bonkSound: {fileID: 8300000, guid: f0f874e8cf8aedd42bd0b25aec260ac8, type: 3}
+  jump: {fileID: 8300000, guid: d3bcb5dd14d75b34ea483c8eb4d9228b, type: 3}
+  canBonk: 1
 --- !u!50 &1077751795
 Rigidbody2D:
   serializedVersion: 4
@@ -1557,6 +1567,8 @@ MonoBehaviour:
   deathCost: -100
   hitCost: 0
   bonkOverlap: 0
+  fallSound: {fileID: 0}
+  hitSound: {fileID: 0}
 --- !u!1 &1190922395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,6 +1694,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &1217422869
 Transform:
   m_ObjectHideFlags: 0
@@ -1723,6 +1737,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &1222045190
 Transform:
   m_ObjectHideFlags: 0
@@ -1764,6 +1780,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &1272743727
 Transform:
   m_ObjectHideFlags: 0
@@ -2450,6 +2468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b03e610c34c8140851aa87f85910f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bitten: {fileID: 0}
+  bite: {fileID: 0}
+  origin: {fileID: 0}
   speed: 10
   jumpForce: 2000
   bonkForce: 10
@@ -2465,6 +2486,9 @@ MonoBehaviour:
   running: 0
   brokeOut: 0
   canGrab: 0
+  bonkSound: {fileID: 8300000, guid: f0f874e8cf8aedd42bd0b25aec260ac8, type: 3}
+  jump: {fileID: 8300000, guid: d3bcb5dd14d75b34ea483c8eb4d9228b, type: 3}
+  canBonk: 1
 --- !u!114 &1882250048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2480,6 +2504,8 @@ MonoBehaviour:
   deathCost: -100
   hitCost: 0
   bonkOverlap: 0
+  fallSound: {fileID: 0}
+  hitSound: {fileID: 0}
 --- !u!1 &1944456028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,6 +2534,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 1048372518631166, guid: ac033ee5be620d441a5a4e509c18ca22, type: 2}
+  taggy: 
+  weaponAud: {fileID: 0}
 --- !u!4 &1944456030
 Transform:
   m_ObjectHideFlags: 0
