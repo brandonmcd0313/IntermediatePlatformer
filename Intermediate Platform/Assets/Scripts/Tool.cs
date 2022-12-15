@@ -132,7 +132,7 @@ public class Tool : MonoBehaviour {
             print("OnCOl Tool");
             //print(col.name);
             //if col = player and cold
-            if (col.tag == "Player")
+            if (col.tag == "Player" && col.gameObject != daddy)
             {
                 poppy = Instantiate(pop);
                 //daddy gets -100 points

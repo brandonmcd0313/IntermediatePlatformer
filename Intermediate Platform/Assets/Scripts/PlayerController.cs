@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour {
     //other bindings are E, [, ], 6
 
     Animator anim;
-
+    SpriteRenderer sr;
+    [SerializeField] Sprite bitten,bite,origin;
     // Use this for initialization
     private bool canMove, canJump, jumping;
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
@@ -41,7 +42,10 @@ public class PlayerController : MonoBehaviour {
 
     void Start () 
     {
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        anim = gameObject.GetComponent<Animator>();
         aud = gameObject.GetComponent<AudioSource>();
+        sr.sprite = origin;
         setGrab(true);
         canMove = true;
         if(PlayerPrefs.GetInt("Tutorial") == 1)
@@ -83,6 +87,16 @@ public class PlayerController : MonoBehaviour {
     public void setGrab(bool i)
     {
         canGrab = i;
+        if(i)
+        {
+            //sprite is the default 
+
+        }
+        else
+        {
+            //can not grab, therefore must be grabbed
+            //set this object to the bitten sprite
+        }
     }
     // Update is called once per frame
     void Update()
@@ -125,6 +139,7 @@ public class PlayerController : MonoBehaviour {
                     if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed right");
+                        //set this sprite to the bite.
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
@@ -186,6 +201,7 @@ public class PlayerController : MonoBehaviour {
                     if (((hit.transform != null && hit.transform.tag == "Player") || grabbed) && !brokeOut)
                     {
                         print("grabbed left");
+                        //set this sprite to the bite.
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
@@ -256,6 +272,7 @@ public class PlayerController : MonoBehaviour {
                 transform.position +=
                     new Vector3(dist * Time.deltaTime, 0);
 
+
             }
 
             //flip left/right
@@ -310,6 +327,21 @@ public class PlayerController : MonoBehaviour {
             {
                 rb2d.AddForce(new Vector3(0, jumpForce));
                 aud.PlayOneShot(jump);
+                // Play the jump animation
+              //  anim.Play("Jump");
+            }
+
+            //animation component
+            // If the character is moving
+            if (Input.GetAxis("Horizontal" + playerCode) != 0)
+            {
+                // Play the walk animation
+                anim.Play("Walk" + playerCode);
+            }
+            else
+            {
+                // Stop the walk animation
+                anim.StopPlayback();
             }
         }
 
