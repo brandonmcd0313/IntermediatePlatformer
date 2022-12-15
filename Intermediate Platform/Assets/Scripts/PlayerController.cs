@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour {
 
     Animator anim;
     SpriteRenderer sr;
-    [SerializeField] Sprite bitten,bite,origin;
+    [SerializeField] Sprite origin;
+    bool isJumping;
     // Use this for initialization
     private bool canMove, canJump, jumping;
     [SerializeField] float speed, jumpForce, bonkForce, throwForce;
@@ -87,16 +88,7 @@ public class PlayerController : MonoBehaviour {
     public void setGrab(bool i)
     {
         canGrab = i;
-        if(i)
-        {
-            //sprite is the default 
-
-        }
-        else
-        {
-            //can not grab, therefore must be grabbed
-            //set this object to the bitten sprite
-        }
+       
     }
     // Update is called once per frame
     void Update()
@@ -326,22 +318,51 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown("Jump" + playerCode) && canJump)
             {
                 rb2d.AddForce(new Vector3(0, jumpForce));
+              
                 aud.PlayOneShot(jump);
+                isJumping = true;
                 // Play the jump animation
               //  anim.Play("Jump");
             }
 
             //animation component
             // If the character is moving
-            if (Input.GetAxis("Horizontal" + playerCode) != 0)
+            //print(Input.GetAxis("Horizontal" + playerCode));
+            if(canGrab && !grabbed)
             {
+            
+            if (Input.GetAxis("Horizontal" + playerCode) >= 0.1 || Input.GetAxis("Horizontal" + playerCode) <= -0.1)
+            {
+               // anim.enabled = true;
                 // Play the walk animation
                 anim.Play("Walk" + playerCode);
             }
             else
             {
                 // Stop the walk animation
-                anim.StopPlayback();
+                // anim.enabled = false;
+                if(Input.GetButtonDown("Jump" + playerCode))
+                {
+                        print("im gonna kms");
+                        anim.Play("Jump" + playerCode);
+                }
+                else
+                    {
+
+                        anim.Play("Idle" + playerCode);
+                    }
+                           
+            }
+
+            }
+            else if(!canGrab)
+            {
+                //this player is grabbed
+                anim.Play("Grabbed" + playerCode);
+            }
+            else if(grabbed)
+            {
+                anim.Play("Grabbing" + playerCode);
             }
         }
 
