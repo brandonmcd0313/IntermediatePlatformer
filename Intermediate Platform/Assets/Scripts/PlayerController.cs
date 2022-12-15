@@ -348,17 +348,10 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 // Stop the walk animation
-                // anim.enabled = false;
-                if(Input.GetButtonDown("Jump" + playerCode))
-                {
-                        print("im gonna kms");
+               
                         anim.Play("Jump" + playerCode);
-                }
-                else
-                    {
-
-                        anim.Play("Idle" + playerCode);
-                    }
+      
+                
                            
             }
 
