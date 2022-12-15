@@ -37,9 +37,10 @@ public class PlayerController : MonoBehaviour {
     public bool canGrab;
 
     AudioSource aud;
-    public AudioClip bonkSound, jump;
+    public AudioClip bonkSound, jump, grabSound, breakSound;
 
     public bool canBonk = true;
+    
 
     void Start () 
     {
@@ -137,7 +138,10 @@ public class PlayerController : MonoBehaviour {
                         hit.rigidbody.velocity = Vector2.zero;
                         hit.transform.position = new Vector3(transform.position.x + 3, transform.position.y);
                         speed = 3.5f;
-                        
+                        if(!grabbed)
+                        {
+                            aud.PlayOneShot(grabSound);
+                        }
                         grabbed = true;
                         if (!running)
                         {
@@ -201,6 +205,10 @@ public class PlayerController : MonoBehaviour {
                         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
                         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
+                        if (!grabbed)
+                        {
+                            aud.PlayOneShot(grabSound);
+                        }
                         grabbed = true;
                         if (!running)
                         {
@@ -448,6 +456,7 @@ public class PlayerController : MonoBehaviour {
             if(smashMeter.value >= smashMeter.maxValue)
             {
                 print("broke out");
+                aud.PlayOneShot(breakSound);
                 brokeOut = true;
                 hit.transform.gameObject.GetComponent<PlayerController>().setGrab(true);
                 hit.transform.gameObject.GetComponent<PlayerController>().setMove(true);
