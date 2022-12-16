@@ -22,7 +22,7 @@ public class Rocketometer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		slider.value = ScoreManager.score1 + ScoreManager.score2;
-		if(slider.value <= goal-10)
+		if(slider.value >= goal-10)
 		{
 			aud.PlayOneShot(blastOff);
 			//exit scene and goto next level.
@@ -33,7 +33,5 @@ public class Rocketometer : MonoBehaviour {
 	void nextScene()
 	{
 		SceneManager.LoadScene(2);
-
-
 	}
 }

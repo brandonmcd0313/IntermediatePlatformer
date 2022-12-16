@@ -32,6 +32,7 @@ public class objectThrow : MonoBehaviour
 		{
 			if (other.tag == "Player" && !grabbed)
 			{
+				other.GetComponent<InteractionManager>().WeaponHit();
 				
 				if (rightPush)
 				{

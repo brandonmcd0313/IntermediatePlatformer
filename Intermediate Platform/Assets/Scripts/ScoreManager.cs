@@ -17,7 +17,18 @@ public class ScoreManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		//FOR TESTING REMOVE LATER!!!
+	//	ScoreManager.score1 = 2305;
+	//	ScoreManager.score2 = 3402;
         aud = GameObject.Find("Player1").GetComponent<AudioSource>();
+		if(SceneManager.GetActiveScene().buildIndex == 3)
+		{
+
+            if (score1 <= 0 || score2 <= 0)
+            {
+                SceneManager.LoadScene(4);
+            }
+        }
     }
 	
 	// Update is called once per frame

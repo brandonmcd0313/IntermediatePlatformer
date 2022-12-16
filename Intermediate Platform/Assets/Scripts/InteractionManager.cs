@@ -96,8 +96,34 @@ public class InteractionManager : MonoBehaviour
         dying = false;
         
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
+
+        if (other.tag == "spike" && !spiked)
+        {
+            GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
+            pop.GetComponent<ScorePopUp>().setVal(hitCost);
+
+            if (this.gameObject.name == "Player1" && !spiked)
+            {
+
+                ScoreManager.score1 += hitCost;
+                StartCoroutine(spikeCooldown());
+            }
+            if (this.gameObject.name == "Player2" && !spiked)
+            {
+
+                ScoreManager.score2 += hitCost;
+                StartCoroutine(spikeCooldown());
+            }
+            aud.PlayOneShot(hitSound);
+        }
+    }
+
+    /*
+    void OnCollision2D(Collision2D colls)
+    {
+        GameObject other = colls.collider.gameObject;
         if (other.tag == "Weapon" && !other.transform.GetComponent<objectThrow>().grabbed && !other.transform.GetComponent<objectThrow>().idle)
         {
 
@@ -121,25 +147,26 @@ public class InteractionManager : MonoBehaviour
 
             aud.PlayOneShot(hitSound);
         }
+    }
+    */
 
-        if (other.tag == "spike" && !spiked)
+    public void WeaponHit()
+    {
+        GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
+        pop.GetComponent<ScorePopUp>().setVal(hitCost * 5);
+        if (this.gameObject.name == "Player1" && !hit)
         {
-            GameObject pop = Instantiate(scorePop, transform.position, Quaternion.identity);
-            pop.GetComponent<ScorePopUp>().setVal(hitCost);
 
-            if (this.gameObject.name == "Player1" && !hit)
-            {
+            ScoreManager.score1 += hitCost;
+            ScoreManager.score2 -= hitCost * 5;
+            StartCoroutine(cooldown());
+        }
+        else if (this.gameObject.name == "Player2" && !hit)
+        {
 
-                ScoreManager.score1 += hitCost;
-                StartCoroutine(spikeCooldown());
-            }
-            if (this.gameObject.name == "Player2" && !hit)
-            {
-
-                ScoreManager.score2 += hitCost;
-                StartCoroutine(spikeCooldown());
-            }
-            aud.PlayOneShot(hitSound);
+            ScoreManager.score2 += hitCost;
+            ScoreManager.score1 -= hitCost * 5;
+            StartCoroutine(cooldown());
         }
     }
     IEnumerator cooldown()

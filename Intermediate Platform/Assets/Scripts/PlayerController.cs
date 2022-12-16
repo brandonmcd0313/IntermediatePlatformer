@@ -29,12 +29,12 @@ public class PlayerController : MonoBehaviour {
     Transform init; public static int tutWait;
     public string playerCode; //P1 or P2, determines input mapping
     public bool grabbed, weaponGrabbed; //if the player has grabbed the other player or not
-    RaycastHit2D hit;
+    RaycastHit2D hit; 
     public Slider smashMeter;
     public GameObject smashMeterObject;
     public bool running, brokeOut;
     private Vector2 ViewportPos;
-    public bool canGrab;
+    public bool canGrab; //true if player IS NOT grabbed, false if PLAYER IS GRABBED
 
     AudioSource aud;
     public AudioClip bonkSound, jump, grabSound, breakSound;
@@ -96,25 +96,25 @@ public class PlayerController : MonoBehaviour {
     {
         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
-        //error, grabbed player is able to grab the player grabbing them.
+       
         if (hit.transform != null)
         {
             if (this.playerCode == "P1")
             {
-                if (Input.GetButtonDown("Fire2" + playerCode) && running)
+                if (Input.GetButtonDown("Fire2P2") && running)
                 {
                     smashMeter.value += 50;
                 }
             }
             else
             {
-                if (Input.GetButtonDown("Fire2" + playerCode) && running)
+                if (Input.GetButtonDown("Fire2P1" + playerCode) && running)
                 {
                     smashMeter.value += 50;
                 }
             }
         }
-
+      //  print("Player " + playerCode + " : " + canGrab);
         //grabing stuff
         {
             if (facingRight)
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x + 4.5f, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x + 2.9f, transform.position.y + 1.7f);
                         speed = 3.5f;
                         if(!grabbed)
                         {
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         hit.transform.GetComponent<objectThrow>().rightPush = true;
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x + 4.5f, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x + 2.5f, transform.position.y);
                         speed = 3.5f;
 
                         weaponGrabbed = true;
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour {
                 else if (weaponGrabbed)
                 {
                     hit.collider.isTrigger = true;
-                    hit.rigidbody.velocity += new Vector2(throwForce, 0);
+                    hit.rigidbody.velocity += new Vector2(throwForce * 2, 0);
                     speed = 10f;
                     weaponGrabbed = false;
                     hit.transform.GetComponent<objectThrow>().grabbed = false;
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<PlayerController>().setMove(false);
                         hit.transform.gameObject.GetComponent<PlayerController>().setGrab(false);
                         hit.rigidbody.velocity = Vector2.zero;
-                        hit.transform.position = new Vector3(transform.position.x - 4.5f, transform.position.y);
+                        hit.transform.position = new Vector3(transform.position.x - 2.9f, transform.position.y + 1.7f);
                         ViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
                         smashMeter.GetComponent<RectTransform>().anchoredPosition = new Vector2(1920 * ViewportPos.x, 1080 * ViewportPos.y);
                         speed = 3.5f;
@@ -333,40 +333,6 @@ public class PlayerController : MonoBehaviour {
               //  anim.Play("Jump");
             }
 
-            //animation component
-            // If the character is moving
-            //print(Input.GetAxis("Horizontal" + playerCode));
-            if(canGrab && !grabbed)
-            {
-            
-            if (Input.GetAxis("Horizontal" + playerCode) >= 0.1 || Input.GetAxis("Horizontal" + playerCode) <= -0.1)
-            {
-               // anim.enabled = true;
-                // Play the walk animation
-                anim.Play("Walk" + playerCode);
-            }
-            else
-            {
-                // Stop the walk animation
-               
-                        anim.Play("Jump" + playerCode);
-      
-                
-                           
-            }
-
-            }
-            else if(!canGrab)
-            {
-                //this player is grabbed
-                anim.Play("Grabbed" + playerCode);
-            }
-            else if(grabbed)
-            {
-                anim.Play("Grabbing" + playerCode);
-            }
-        }
-
         //keep this player on the screen!
         {
 
@@ -399,6 +365,42 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+        }
+
+
+        //animation component
+        // If the character is moving
+        //print(Input.GetAxis("Horizontal" + playerCode));
+        if (!canGrab)
+        {
+            //this player is grabbed
+            anim.Play("Grabbed" + playerCode);
+        }
+        else if (grabbed)
+        {
+           // anim.enabled = true;
+            anim.Play("Grabbing" + playerCode);
+        }
+        else
+        {
+           // anim.enabled = true;
+            if (Input.GetAxis("Horizontal" + playerCode) >= 0.1 || Input.GetAxis("Horizontal" + playerCode) <= -0.1)
+            {
+                // anim.enabled = true;
+                // Play the walk animation
+                anim.Play("Walk" + playerCode);
+            }
+            else
+            {
+                // Stop the walk animation
+
+                anim.Play("Jump" + playerCode);
+
+
+
+            }
+
+        }
 
     }
 
