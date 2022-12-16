@@ -7,7 +7,7 @@ public class Pipe : MonoBehaviour {
 	[SerializeField] Sprite[] stage;
 	[SerializeField] float increment;
     SpriteRenderer sr; int curStage = -1;
-	private float value;
+	private float value = 0;
 	AudioSource aud;
 	public AudioClip epic;
 	// Use this for initialization
@@ -35,8 +35,8 @@ public class Pipe : MonoBehaviour {
 			curStage++;
 			sr.sprite = stage[curStage];
 			//reset collider
-			Destroy(this.gameObject.GetComponent<PolygonCollider2D>());
-			this.gameObject.AddComponent<PolygonCollider2D>();
+			//Destroy(this.gameObject.GetComponent<PolygonCollider2D>());
+			//this.gameObject.AddComponent<PolygonCollider2D>();
 		}
 		else {
 

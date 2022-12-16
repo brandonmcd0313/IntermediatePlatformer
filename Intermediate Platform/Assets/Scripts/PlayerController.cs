@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
-                if (Input.GetButtonDown("Fire2P1" + playerCode) && running)
+                if (Input.GetButtonDown("Fire2P1") && running)
                 {
                     smashMeter.value += 50;
                 }

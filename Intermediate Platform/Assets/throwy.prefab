@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4505197863023730}
   - component: {fileID: 212191321586818498}
-  - component: {fileID: 60519924699000400}
   - component: {fileID: 50504350762478474}
   - component: {fileID: 114766233653877052}
   - component: {fileID: 82222168519941302}
-  - component: {fileID: 60180732719687024}
+  - component: {fileID: 61653106508306598}
+  - component: {fileID: 61181467415195140}
   m_Layer: 0
   m_Name: throwy
   m_TagString: Weapon
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491203528077320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.304, y: -9.622, z: 0}
+  m_LocalPosition: {x: -13.300283, y: -3.3719459, z: 0}
   m_LocalScale: {x: 0.2876396, y: 0.28658375, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,8 +65,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60180732719687024
-PolygonCollider2D:
+--- !u!61 &61181467415195140
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491203528077320}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.4, y: 6.4}
+    newSize: {x: 5.44, y: 5.44}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.4, y: 6.4}
+  m_EdgeRadius: 0
+--- !u!61 &61653106508306598
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -87,144 +112,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.04, y: -2.4099998}
-      - {x: 2.02, y: -2}
-      - {x: 2, y: -1.9799999}
-      - {x: 1.8199999, y: -1.5999999}
-      - {x: 1.8, y: -1.5799999}
-      - {x: 2.2, y: -1.42}
-      - {x: 2.22, y: -1.4}
-      - {x: 2.31, y: -0.96}
-      - {x: 3.1399999, y: -0.25}
-      - {x: 3.1999998, y: -0.04}
-      - {x: 3.1999998, y: 0.35}
-      - {x: 3, y: 0.42}
-      - {x: 2, y: 1.18}
-      - {x: 2.3999999, y: 2.48}
-      - {x: 1.8, y: 2.4199998}
-      - {x: 1.38, y: 2}
-      - {x: 1, y: 1.8199999}
-      - {x: 0.97999996, y: 1.8}
-      - {x: 0.59999996, y: 1.8199999}
-      - {x: 0.42, y: 2.6}
-      - {x: 0.39999998, y: 2.62}
-      - {x: 0.25, y: 3.1399999}
-      - {x: 0.04, y: 3.1999998}
-      - {x: -0.35, y: 3.1999998}
-      - {x: -0.42, y: 3}
-      - {x: -1.16, y: 1.91}
-      - {x: -1.76, y: 2.33}
-      - {x: -2.24, y: 2.21}
-      - {x: -2.22, y: 1.8}
-      - {x: -2.2, y: 1.78}
-      - {x: -2.02, y: 1.4}
-      - {x: -2, y: 1.38}
-      - {x: -1.8199999, y: 1}
-      - {x: -1.8, y: 0.97999996}
-      - {x: -1.8199999, y: 0.59999996}
-      - {x: -2.6, y: 0.42}
-      - {x: -2.62, y: 0.39999998}
-      - {x: -3, y: 0.22}
-      - {x: -3.1999998, y: 0.02}
-      - {x: -3.1999998, y: -0.47}
-      - {x: -2.2, y: -1.42}
-      - {x: -1.8, y: -1.42}
-      - {x: -1.78, y: -1.4}
-      - {x: -2.02, y: -2}
-      - {x: -2.02, y: -2.3999999}
-      - {x: -2, y: -2.4199998}
-      - {x: -1.5999999, y: -2.4199998}
-      - {x: -1.38, y: -2.24}
-      - {x: -1.18, y: -2.04}
-      - {x: -0.45, y: -2.62}
-      - {x: -0.21, y: -3.03}
-      - {x: -0.02, y: -3.1999998}
-      - {x: 0.22, y: -3.1999998}
-      - {x: 0.42, y: -3}
-      - {x: 0.78999996, y: -1.9}
-      - {x: 1.56, y: -2.53}
---- !u!60 &60519924699000400
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1491203528077320}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 6.4}
-    newSize: {x: 5.44, y: 5.44}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.04, y: -2.4099998}
-      - {x: 2.02, y: -2}
-      - {x: 2, y: -1.9799999}
-      - {x: 1.8199999, y: -1.5999999}
-      - {x: 1.8, y: -1.5799999}
-      - {x: 2.2, y: -1.42}
-      - {x: 2.22, y: -1.4}
-      - {x: 2.31, y: -0.96}
-      - {x: 3.1399999, y: -0.25}
-      - {x: 3.1999998, y: -0.04}
-      - {x: 3.1999998, y: 0.35}
-      - {x: 3, y: 0.42}
-      - {x: 2, y: 1.18}
-      - {x: 2.3999999, y: 2.48}
-      - {x: 1.8, y: 2.4199998}
-      - {x: 1.38, y: 2}
-      - {x: 1, y: 1.8199999}
-      - {x: 0.97999996, y: 1.8}
-      - {x: 0.59999996, y: 1.8199999}
-      - {x: 0.42, y: 2.6}
-      - {x: 0.39999998, y: 2.62}
-      - {x: 0.25, y: 3.1399999}
-      - {x: 0.04, y: 3.1999998}
-      - {x: -0.35, y: 3.1999998}
-      - {x: -0.42, y: 3}
-      - {x: -1.16, y: 1.91}
-      - {x: -1.76, y: 2.33}
-      - {x: -2.24, y: 2.21}
-      - {x: -2.22, y: 1.8}
-      - {x: -2.2, y: 1.78}
-      - {x: -2.02, y: 1.4}
-      - {x: -2, y: 1.38}
-      - {x: -1.8199999, y: 1}
-      - {x: -1.8, y: 0.97999996}
-      - {x: -1.8199999, y: 0.59999996}
-      - {x: -2.6, y: 0.42}
-      - {x: -2.62, y: 0.39999998}
-      - {x: -3, y: 0.22}
-      - {x: -3.1999998, y: 0.02}
-      - {x: -3.1999998, y: -0.47}
-      - {x: -2.2, y: -1.42}
-      - {x: -1.8, y: -1.42}
-      - {x: -1.78, y: -1.4}
-      - {x: -2.02, y: -2}
-      - {x: -2.02, y: -2.3999999}
-      - {x: -2, y: -2.4199998}
-      - {x: -1.5999999, y: -2.4199998}
-      - {x: -1.38, y: -2.24}
-      - {x: -1.18, y: -2.04}
-      - {x: -0.45, y: -2.62}
-      - {x: -0.21, y: -3.03}
-      - {x: -0.02, y: -3.1999998}
-      - {x: 0.22, y: -3.1999998}
-      - {x: 0.42, y: -3}
-      - {x: 0.78999996, y: -1.9}
-      - {x: 1.56, y: -2.53}
+  serializedVersion: 2
+  m_Size: {x: 6.4, y: 6.4}
+  m_EdgeRadius: 0
 --- !u!82 &82222168519941302
 AudioSource:
   m_ObjectHideFlags: 1

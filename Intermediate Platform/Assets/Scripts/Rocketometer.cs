@@ -9,7 +9,7 @@ public class Rocketometer : MonoBehaviour {
 	[SerializeField] int goal;
 	private Slider slider;
 	AudioSource aud;
-	AudioClip blastOff;
+	public AudioClip blastOff; bool sound = false;
 	// Use this for initialization
 	void Start () {
         aud = GameObject.Find("Player1").GetComponent<AudioSource>();
@@ -24,7 +24,11 @@ public class Rocketometer : MonoBehaviour {
 		slider.value = ScoreManager.score1 + ScoreManager.score2;
 		if(slider.value >= goal-10)
 		{
-			aud.PlayOneShot(blastOff);
+			if(!sound)
+			{
+				aud.PlayOneShot(blastOff);
+				sound = true;
+			}
 			//exit scene and goto next level.
 			Invoke("nextScene", 4f);
         }
@@ -32,6 +36,8 @@ public class Rocketometer : MonoBehaviour {
 
 	void nextScene()
 	{
-		SceneManager.LoadScene(2);
+		//fuck level 2
+		//more like level boo
+		SceneManager.LoadScene(3);
 	}
 }

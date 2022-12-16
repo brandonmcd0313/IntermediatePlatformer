@@ -101,6 +101,6 @@ public class MenuThread : MonoBehaviour {
 	public void loadLB()
 	{
 		//placeholder
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(5);
     }
 }
